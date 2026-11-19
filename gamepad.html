@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>🎮 Game Library Notepad</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f6fb;
+  --panel:#ffffff;
+  --accent:#4f7cff;
+  --accent2:#8fd3f4;
+  --text:#1e2430;
+  --muted:#6b7280;
+}
+.beast{
+  --bg:#05070c;
+  --panel:#0b1220;
+  --accent:#00f0ff;
+  --accent2:#ff006a;
+  --text:#e8f6ff;
+  --muted:#6aa3c4;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Inter,system-ui;
+  background:var(--bg);
+  color:var(--text);
+  overflow:hidden;
+}
+
+/* RGB MOVING BACKGROUND */
+.parallax{
+  position:fixed;
+  inset:-30%;
+  background:linear-gradient(120deg,#ff004c,#00f0ff,#8f00ff,#00ff88,#ff8c00);
+  background-size:400% 400%;
+  animation:rgbFlow 35s linear infinite;
+  filter:blur(120px) saturate(140%);
+  opacity:.35;
+  z-index:-2;
+}
+@keyframes rgbFlow{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+
+.app{
+  width:94%;
+  max-width:1200px;
+  height:94vh;
+  margin:3vh auto;
+  background:rgba(255,255,255,.82);
+  backdrop-filter:blur(18px) saturate(120%);
+  border-radius:22px;
+  box-shadow:0 40px 90px rgba(0,0,0,.18);
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+  position:relative;
+  animation:float 10s ease-in-out infinite;
+}
+.beast .app{
+  background:rgba(8,14,30,.75);
+  backdrop-filter:blur(22px) saturate(140%);
+  box-shadow:0 0 60px rgba(0,240,255,.25), inset 0 0 40px rgba(0,240,255,.08);
+}
+
+.app::after{
+  content:'';
+  position:absolute;
+  inset:-2px;
+  border-radius:24px;
+  background:linear-gradient(90deg,var(--accent),var(--accent2),var(--accent));
+  background-size:300% 300%;
+  animation:auraMove 6s linear infinite;
+  opacity:.35;
+  filter:blur(18px);
+  z-index:-1;
+}
+@keyframes auraMove{
+  to{background-position:300% 50%}
+}
+@keyframes float{
+  0%{transform:translateY(0)}
+  50%{transform:translateY(-4px)}
+  100%{transform:translateY(0)}
+}
+
+.top{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:14px 18px;
+  background:linear-gradient(90deg,rgba(0,0,0,.05),transparent);
+}
+.top .title{font-weight:600;font-size:16px}
+.spacer{flex:1}
+
+.btn{
+  background:transparent;
+  border:1px solid rgba(0,0,0,.15);
+  color:var(--text);
+  border-radius:14px;
+  padding:8px 16px;
+  cursor:pointer;
+  transition:.25s;
+  position:relative;
+  overflow:hidden;
+}
+.beast .btn{border-color:rgba(255,255,255,.18)}
+.btn:hover{transform:translateY(-1px)}
+.btn::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(120deg,transparent,rgba(255,255,255,.4),transparent);
+  transform:translateX(-120%);
+}
+.btn:hover::after{animation:shine .6s ease}
+@keyframes shine{to{transform:translateX(120%)}}
+
+.quick{
+  display:flex;
+  gap:10px;
+  padding:12px 18px;
+  background:rgba(0,0,0,.03);
+}
+.beast .quick{background:rgba(255,255,255,.05)}
+.quick input{
+  flex:1;
+  border-radius:14px;
+  border:1px solid rgba(0,0,0,.15);
+  padding:11px 14px;
+  font-size:14px;
+  background:transparent;
+  color:var(--text);
+}
+.beast .quick input{background:#050913;border-color:#13233a}
+
+.editor-wrap{flex:1;position:relative}
+.editor{
+  height:100%;
+  width:100%;
+  border:0;
+  outline:0;
+  resize:none;
+  background:transparent;
+  padding:26px 30px;
+  line-height:1.8;
+  font-family:'JetBrains Mono',monospace;
+  color:var(--text);
+  caret-color:var(--accent);
+  font-size:15px;
+}
+.editor::placeholder{color:var(--muted)}
+.editor::-webkit-scrollbar{width:8px}
+.editor::-webkit-scrollbar-thumb{background:linear-gradient(var(--accent),var(--accent2));border-radius:10px}
+
+.footer{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:12px 18px;
+  font-size:13px;
+  color:var(--muted);
+  background:rgba(0,0,0,.03);
+}
+.beast .footer{background:rgba(255,255,255,.05)}
+.stat{padding:4px 12px;border-radius:999px;background:rgba(0,0,0,.06)}
+.beast .stat{background:rgba(255,255,255,.1)}
+.motivation{flex:1;animation:quotePulse 4s ease-in-out infinite}
+@keyframes quotePulse{
+  0%{opacity:.4;transform:translateY(4px)}
+  50%{opacity:1;transform:translateY(0)}
+  100%{opacity:.4;transform:translateY(4px)}
+}
+</style>
+</head>
+<body>
+<div class="parallax"></div>
+<div class="app">
+  <div class="top">
+    <div class="title">🎮 Game Library</div>
+    <div class="spacer"></div>
+    <button class="btn" onclick="exportTXT()">⬇ TXT</button>
+    <button class="btn" onclick="toggleTheme()">🎨 Theme</button>
+    <button class="btn" onclick="clearAll()">🗑 Clear</button>
+  </div>
+  <div class="quick">
+    <input id="quickInput" placeholder="Type game name…" />
+    <button class="btn" onclick="quickAdd()">➕ Quick</button>
+    <button class="btn" onclick="detailedAdd()">🧠 Detailed</button>
+  </div>
+  <div class="editor-wrap">
+    <textarea id="editor" class="editor" placeholder="Your personal game universe lives here…"></textarea>
+  </div>
+  <div class="footer">
+    <div class="stat" id="counter">0 Games</div>
+    <div class="stat" id="avgRating">⭐ Avg: —</div>
+    <div class="stat" id="completed">✅ 0 Completed</div>
+    <div class="motivation" id="motivation"></div>
+  </div>
+</div>
+<script>
+const editor=document.getElementById('editor');
+const quickInput=document.getElementById('quickInput');
+const counter=document.getElementById('counter');
+const avgRating=document.getElementById('avgRating');
+const completed=document.getElementById('completed');
+const motivation=document.getElementById('motivation');
+let beast=false;
+const lines=[
+  "🎮 One more quest before sleep",
+  "🏆 Legends never quit",
+  "🔥 Backlog today, nostalgia tomorrow",
+  "⚔️ Skill issue? Nah. Training arc.",
+  "💀 Boss defeated. Confidence +10",
+  "🚀 From noob to elite",
+  "🎧 Zone in. World out."
+];
+function save(){localStorage.setItem('gamenotes',editor.value)}
+function load(){editor.value=localStorage.getItem('gamenotes')||'';updateStats()}
+function games(){return editor.value.match(/^🎮/gm)||[]}
+function nextNum(){return games().length+1}
+function updateStats(){
+  counter.textContent=`${games().length} Games`;
+  const r=[...editor.value.matchAll(/⭐ Rating:\s*(\d+)/g)].map(x=>+x[1]);
+  avgRating.textContent=r.length?`⭐ Avg: ${(r.reduce((a,b)=>a+b,0)/r.length).toFixed(1)}`:'⭐ Avg: —';
+  completed.textContent=`✅ ${(editor.value.match(/Status:\s*Completed/gi)||[]).length} Completed`;
+}
+function quickAdd(){
+  if(!quickInput.value.trim())return;
+  editor.value+=`\n🎮 ${nextNum()}. ${quickInput.value.trim()}\n`;
+  quickInput.value='';save();updateStats();motivate();
+}
+function detailedAdd(){
+  if(!quickInput.value.trim())return;
+  editor.value+=`\n🎮 ${nextNum()}. ${quickInput.value.trim()}\n💾 Size: ___ GB\n🏷️ Platform: PC | PS | Xbox | Mobile\n🧠 Genre: ___\n⭐ Rating: __\n⏱️ Status: Not Started\n📝 Notes:\n\n`;
+  quickInput.value='';save();updateStats();motivate();
+}
+function motivate(){motivation.textContent=lines[Math.floor(Math.random()*lines.length)]}
+function toggleTheme(){beast=!beast;document.body.classList.toggle('beast',beast)}
+function exportTXT(){
+  const b=new Blob([editor.value],{type:'text/plain'});
+  const u=URL.createObjectURL(b);
+  const a=document.createElement('a');
+  a.href=u;a.download='games.txt';a.click();
+  URL.revokeObjectURL(u);
+}
+function clearAll(){editor.value='';save();updateStats()}
+quickInput.addEventListener('keydown',e=>{if(e.key==='Enter')quickAdd()});
+editor.addEventListener('input',()=>{save();updateStats()});
+load();motivate();editor.focus();
+</script>
+</body>
+</html>
